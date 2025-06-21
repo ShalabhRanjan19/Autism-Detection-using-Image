@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Autism Prediction Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background-image.jpg'); /* Replace with your background image path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 10px;
+            font-size:18px;
+        }
+        
+        
+
+        .page {
+            padding: 2%;
+            border: 1px #951d9b solid;
+            border-radius: 5px;
+            box-shadow: 10px 10px 10px rgba(90, 11, 78, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+
+        @page {
+            
+            margin: 10px;
+        }
+
+        header {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to left, #553c9a, #b393d3);
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #210f6b;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 2em;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+
+        img.uploaded-image {
+            max-width: 100%;
+            height: auto;
+            margin: 1em 0;
+        }
+
+        .result {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 1em;
+        }
+
+        .upload-form {
+            text-align: center;
+        }
+
+        .upload-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .upload-button:active {
+            background-color: #004699;
+            color: white;
+        }
+
+        color {
+            color: #edeef0;
+        }
+
+        p1 {
+            color: #333; /* Change the color as needed */
+        }
+
+        p3 {
+            color: #333; /* Change the color as needed */
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        h4{
+            text-align:center;
+            font-size:20px;
+        }
+        
+        .feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            background-color: rgba(240, 248, 255, 0.9); /* Light blue */
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feedback-box p {
+            margin: 0;
+        }
+        footer {
+            background-color: #553c9a; /* Footer background color */
+            color: #fff; /* Footer text color */
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            border-top: 2px solid #b393d3; /* Optional top border for design */
+        }
+        
+        footer .footer-content {
+            font-size: 16px;
+        }
+        
+        footer a {
+            color: #b393d3; /* Link color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .upload-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .upload-button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        
+        .upload-button:active {
+            background-color: #004699;
+            color: white;
+        }
+        
+        /* Styles for the disabled button */
+        .upload-button:disabled {
+            background-color: #cccccc; /* Light gray background */
+            color: #666666; /* Darker gray text */
+            cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+        }
+        
+        /* Hover effect for disabled button */
+        .upload-button:disabled:hover {
+            background-color: #cccccc; /* Keep the same color on hover */
+            color: #666666; /* Keep the same text color on hover */
+        }
+        .chat-container {
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            width: 300px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #chatbox {
+            width: 100%;
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        #userInput {
+            width: calc(100% - 90px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+        #sendButton {
+            padding: 10px 15px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #toggleButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            width: 60px;
+            height: 60px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #toggleButton.active {
+            width: 30px;
+            height: 30px;
+        }      
+    </style>   
+</head>
+
+
+     
+    <header>
+        <h1>Autism Prediction Website</h1>
+    </header>
+    <h3>
+        <center>
+            PROJECT TITLE:
+        </center>
+    </h3>
+    <p>
+        <center>
+            <b>Detection of Autism Spectrum Disorder(ASD) using Machine Learning</b>
+        </center>
+    
+    </p>
+    <h3>
+        <p>INTRODUCTION:</p>
+    </h3>
+    <p1><b>
+        Autism spectrum disorder (ASD) is a type of mental illness that can be detected by using social media data and
+        biomedical images.
+        Autism spectrum disorder (ASD) is a neurological disease correlated with brain growth that later impacts the
+            physical impression of the face. Children with ASD have dissimilar facial landmarks, which set them noticeably
+            apart from typically developed (TD) children.</b>
+
+        <br />
+        <br />
+        <b>Novelty of the proposed research is to design a system that is based on autism spectrum disorder detection on social
+        media and face recognition. To identify such landmarks, machine learning model CNN is used.</b>
+    </p1>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="https://thumbs.dreamstime.com/b/happy-children-girls-girlfriend-schoolgirl-student-elementary-school-happy-children-girlfriend-schoolgirl-student-elementary-121447690.jpg" alt="Child Placeholder Image" style="max-width: 50%; height: auto; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    </div> 
+    <div class="container">
+        <h3>Autism Awareness Questions</h3>
+        <form class="questions-form" id="feedbackForm">
+            <!-- Question 1 -->
+            <div class="question">
+                <p>1. Does the individual avoid eye contact?</p>
+                <label>
+                    <input type="radio" name="question1" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="question1" value="no"> No
+                </label>
+            </div>
+    
+            <!-- Question 2 -->
+            <div class="question">
+                <p>2. Does the individual have difficulty understanding social cues?</p>
+                <label>
+                    <input type="radio" name="question2" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="question2" value="no"> No
+                </label>
+            </div>
+    
+            <!-- Question 3 -->
+            <div class="question">
+                <p>3. Does the individual exhibit repetitive behaviors or movements?</p>
+                <label>
+                    <input type="radio" name="question3" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="question3" value="no"> No
+                </label>
+            </div>
+    
+            <!-- Question 4 -->
+            <div class="question">
+                <p>4. Does the individual have hypersensitivity to certain sounds, lights, or textures?</p>
+                <label>
+                    <input type="radio" name="question4" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="question4" value="no"> No
+                </label>
+            </div>
+    
+            <!-- Question 5 -->
+            <div class="question">
+                <p>5. Does the individual prefer to play alone or has difficulty interacting with peers?</p>
+                <label>
+                    <input type="radio" name="question5" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="question5" value="no"> No
+                </label>
+            </div>
+    
+            <!-- Question 6 -->
+            <div class="question">
+                <p>6. Does the individual have delayed speech or difficulty communicating?</p>
+                <label>
+                    <input type="radio" name="question6" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="question6" value="no"> No
+                </label>
+            </div>
+    
+            <!-- Question 7 -->
+            <div class="question">
+                <p>7. Does the individual exhibit strong interests in specific topics or activities?</p>
+                <label>
+                    <input type="radio" name="question7" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="question7" value="no"> No
+                </label>
+            </div>
+    
+            <!-- Submit Button -->
+            <button class="upload-button" type="submit">Submit Answers</button>
+        </form>
+    
+        <!-- Feedback Section -->
+        <div class="feedback-box" id="feedbackBox" style="display: none;">
+            <p class="feedback-message"></p>
+        </div>
+    </div>
+    
+    
+        <!-- Feedback Section -->
+        <div class="feedback-box" id="feedbackBox" style="display: none;">
+            <p class="feedback-message"></p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent actual form submission
+    
+                // Collect the answers
+                const questions = Array.from(document.querySelectorAll('.questions-form .question input[type="radio"]:checked'));
+                const answers = questions.map(q => q.value);
+    
+                // Determine feedback based on answers
+                const yesCount = answers.filter(answer => answer === "yes").length;
+                let message = "Based on your responses, everything seems fine!";
+                const uploadButton = document.querySelector('.upload-form .upload-button');
+
+                if (yesCount >= 3) {
+                    message = "Based on your responses, we recommend you to upload your photo & further consult a specialist.";
+                    uploadButton.disabled = false; // Enable upload button
+                } else {
+                    message = "Based on your responses, everything seems fine!";
+                    uploadButton.disabled = true; // Disable upload button
+                }
+    
+                // Show the feedback message
+                const feedbackBox = document.getElementById('feedbackBox');
+                feedbackBox.style.display = "block";
+                feedbackBox.querySelector('.feedback-message').textContent = message;
+            });
+        });
+    </script>
+    <div class="container">
+        <p style="line height:1.2;"><b>Please upload your photo by clicking the button below</b></p>
+
+        <form class="upload-form" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button class="upload-button" type="submit" disabled>Upload and Predict</button>
+        </form>
+        <div id="spinner" class="spinner" style="display: none;"></div>
+        {% if img_path %}
+        <hr>
+        <h2>Uploaded Image</h2>
+        <img src="{{ url_for('static',filename='uploads/'+filename) }}" alt="Uploaded Image" style="max-width: 100%;">
+        <hr>
+        <p class="result">Predicted Result: {{ result }}</p>
+        {% endif %}
+    </div>
+   
+    <!-- Toggle Button -->
+    <button id="toggleButton">Open Chat</button>
+
+    <!-- Chat Container -->
+    <div class="chat-container" id="chatContainer"> 
+        <h4>Autism Chatbot</h4>
+        <div id="chatbox"></div>
+        <div style="display: flex; width: 100%;">
+            <input type="text" id="userInput" placeholder="Ask me about autism...">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById('toggleButton');
+        const chatContainer = document.getElementById('chatContainer');
+
+        toggleButton.addEventListener('click', () => {
+            if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+                chatContainer.style.display = 'flex';
+                toggleButton.textContent = 'close';
+                toggleButton.classList.add('active');
+            } else {
+                chatContainer.style.display = 'none';
+                toggleButton.textContent = 'open chat';
+                toggleButton.classList.remove('active');
+            }
+        });
+    </script>
+    
+<script>
+    const chatbox = document.getElementById('chatbox');
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+    const responses = {
+        "hi": "Hey! How can I help you?",
+        "what is autism?": "Autism Spectrum Disorder (ASD) is a developmental disorder that affects communication and behavior.",   
+        "what are signs of autism?": "Common signs include difficulty with communication, social interactions, and repetitive behaviors.",
+        "how does autism affect you?": "Individuals with autism may have challenges in understanding and using verbal and non-verbal communication.",
+        "What are some common therapies for autism?": "Common therapies include Applied Behavior Analysis (ABA), speech therapy, and occupational therapy.",
+        "How can I support a friend or family member with autism?": "Be patient, listen, and educate yourself about autism to provide better support.",
+        "What is autism?":"Autism, or Autism Spectrum Disorder (ASD), refers to a range of conditions characterized by challenges with social skills, repetitive behaviors, and speech and nonverbal communication.",
+        "What are the early signs of autism?":"Early signs of autism can include delayed speech development, avoiding eye contact, difficulty with social interactions, and repetitive behaviors.",
+"What causes autism?":"The exact cause of autism is unknown, but it is believed to involve a combination of genetic and environmental factors.",
+"How is autism diagnosed?":"Autism is diagnosed through behavioral assessments and developmental evaluations conducted by specialists such as psychologists or pediatricians.",
+"Can autism be cured?":"There is no cure for autism, but early intervention and therapies can greatly improve quality of life and developmental outcomes.",
+"What are common therapies for autism?":"Common therapies for autism include Applied Behavior Analysis (ABA), speech therapy, occupational therapy, and social skills training.",
+"Is autism more common in boys or girls?":"Autism is about four times more common in boys than in girls.",
+"Can adults be diagnosed with autism?":"Yes, adults can be diagnosed with autism. Many individuals are diagnosed later in life when they recognize traits of autism in themselves.",
+"What is high-functioning autism?":"High-functioning autism refers to individuals on the autism spectrum who have average or above-average intelligence and fewer difficulties with daily functioning.",
+"What is sensory sensitivity in autism?":"Sensory sensitivity is when individuals with autism are over- or under-sensitive to sensory inputs such as sounds, lights, textures, or smells.",
+"Are vaccines linked to autism?":"No, extensive research has shown that vaccines do not cause autism.",
+"Can people with autism live independently?": "Many individuals with autism can live independently with the right support and accommodations.",
+"What is the autism spectrum?":"The autism spectrum describes the wide range of abilities and challenges experienced by individuals with autism, from mild to severe.",
+"How can I support a friend with autism?":"You can support a friend with autism by being patient, understanding their needs, respecting their boundaries, and learning about autism.",
+"What is stimming?":"Stimming refers to self-stimulatory behaviors, such as hand-flapping, rocking, or repeating sounds, which individuals with autism may use to self-regulate or express emotions.",
+"Can autism be detected during pregnancy?":"Currently, there is no reliable way to detect autism during pregnancy.",
+"Is autism a disability?":"Autism is considered a developmental disability, but many individuals with autism prefer to view it as a difference rather than a disability.",
+"thank you":"You are Welcome!" 
+};
+
+    function sendMessage() {
+        const userText = userInput.value;
+        if (userText) {
+            chatbox.innerHTML += `<div class="message user">${userText}</div>`;
+            userInput.value = '';
+
+            const botResponse = responses[userText] || "I'm sorry, I don't have an answer for that.";
+            chatbox.innerHTML += `<div class="message bot">${botResponse}</div>`;
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+        }
+    }
+
+    sendButton.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>    
+    <h3>
+        Developed by:<br>
+    </h3>
+    <h4>    
+        Riya Singh 1BI22CS131 <br>
+        Shalabh Ranjan 1BI22CS146 <br>
+        Shruti Kumari 1BI22C157 <br>
+        Yoganand 1BI22CS194 <br>
+    </h4>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="currentYear"></span> Autism Prediction App. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    
+    
+</body>
+
+</html>
