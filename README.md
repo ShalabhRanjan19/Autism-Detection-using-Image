@@ -96,10 +96,10 @@ The system employs a Convolutional Neural Network (CNN) architecture optimized f
 
 The model achieves the following performance metrics:
 
-- **Accuracy**: [To be updated based on your results]
-- **Precision**: [To be updated based on your results]
-- **Recall**: [To be updated based on your results]
-- **F1-Score**: [To be updated based on your results]
+- **Accuracy**: 81.08%
+- **Precision**: 88.23 %
+- **Recall**: 84.50704 %
+- **F1-Score**: 86.28 %
 
 
 ## File Structure
